@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply from: "$rootDir/androidProjectConfig.gradle"
+apply plugin: 'kotlin-android-extensions'
+
+/*Relevant import statement*/
+import dependencies.libs
+
+
+kapt {
+    arguments {
+        arg("fragmentArgsLib", true)
+    }
+}
+dependencies {
+
+    // Kotlin standard library
+    api libs.build.kotlin.kotlinstdlib
+
+    //Fragment args to easy passing data between fragments
+    api libs.fragmentargs.runtime
+    kapt libs.fragmentargs.compiler
+
+    // RxJava
+    api libs.rx.rxjava
+    api libs.rx.rxandroid
+
+
+    // Dagger 2 for dependency injection
+    api libs.dagger.runtime
+    kapt libs.dagger.compiler
+    compileOnly libs.dagger.jsr250
+
+    // Retrofit for networking
+    api libs.retrofit.retrofit
+    api libs.retrofit.convertermoshi
+    api libs.retrofit.adapterrxjava2
+
+    // Moshi
+    api libs.moshi
+
+    // OkHttp3
+    api libs.okhttp.okhttp
+
+    // Log library
+    api libs.timber
+
+    // Picasso for Image loading
+    implementation libs.picasso.picasso
+    implementation libs.picasso.picasso2okhttp3downloader
+
+    // Persistent layer
+    implementation libs.room.runtime
+    implementation libs.room.rx
+    kapt libs.room.compile
+
+    //Android design libraries
+    api libs.androidsupport.recyclerviewv7
+    api libs.androidsupport.supportv4
+    api libs.androidsupport.appcompatv7
+    api libs.androidsupport.annotations
+
+}

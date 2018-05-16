@@ -1,0 +1,43 @@
+import dependencies.libs
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath libs.build.gradleplugin
+        classpath libs.build.kotlin.kotlingradleplugin
+        classpath libs.build.detektplugin
+    }
+}
+
+repositories {
+    jcenter()
+    google()
+    maven { url "https://plugins.gradle.org/m2/" }
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

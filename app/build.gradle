@@ -1,0 +1,84 @@
+import dependencies.libs
+
+
+apply plugin: 'com.android.application'
+apply from: "$rootDir/androidProjectConfig.gradle"
+apply plugin: 'kotlin-android-extensions'
+
+
+
+android {
+
+    defaultConfig {
+        applicationId "bansal.test.mobile"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    buildTypes {
+        debug{
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // This is handled for you by the 2.0+ Gradle Plugin
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = ["$projectDir/res"]
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+}
+
+dependencies {
+
+    implementation project(':core')
+
+    // ---------------------------------
+    // Android Support Library
+    // ---------------------------------
+    implementation libs.androidsupport.appcompatv7
+    implementation libs.androidsupport.annotations
+    implementation libs.androidsupport.design
+    implementation libs.androidsupport.cardviewv7
+
+    implementation libs.room.runtime
+    implementation libs.room.rx
+
+    // LeakCanary for finding memory leaks
+    implementation libs.leakcanary
+
+    // Dagger 2 for dependency injection
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    kapt libs.dagger.compiler
+    kaptTest libs.dagger.compiler
+    kaptAndroidTest libs.dagger.compiler
+    compileOnly libs.dagger.jsr250
+}
+
+apply plugin: 'kotlin-android'

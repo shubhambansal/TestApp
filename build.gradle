@@ -1,0 +1,31 @@
+import dependencies.libs
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath libs.build.gradleplugin
+        classpath libs.build.kotlin.kotlingradleplugin
+    }
+}
+
+// This setting is available to all sub-projects and modules
+allprojects{
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+configurations {
+    ktlint
+}
+
+dependencies {
+    // Ktlint for code formatting checks
+    ktlint libs.ktlint
+}
