@@ -17,7 +17,12 @@ class CustomerReviewConverter @Inject constructor(private val androidResourcePro
         response.data.forEach { review ->
 
             val submitterInfo = "${androidResourceProvider.getString(R.string.submitter_info)} ${review.reviewerName}, ${review.reviewerCountry}"
-            reviewsList.add(CustomerReviewsViewData(review.title?: "", review.rating.toFloat() , review.message?: "", submitterInfo))
+            reviewsList.add(CustomerReviewsViewData(review.review_id,review.title?: "",
+                review.rating.toFloat() ,
+                review.message?: "",
+                review.reviewerName?: "",
+                review.reviewerCountry,
+                submitterInfo))
         }
 
         return reviewsList

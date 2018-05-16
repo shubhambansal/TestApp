@@ -12,7 +12,7 @@ import bansal.test.mobile.ui.RxUtilProvider
 import bansal.test.mobile.ui.reviews.adapter.CustomerReviewAdapter
 import de.zalando.lounge.di.CoreComponentProvider
 import de.zalando.lounge.ui.base.BaseSingleContainerFragment
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
@@ -54,11 +54,13 @@ class ReviewsFragment : BaseSingleContainerFragment() {
 
         initRecyclerView()
 
+
         subscribe(customerReviewsViewModel.getCustomerReviewsFor(cityId, tourId), onSuccess = {
             reviewList -> adapter.items = reviewList
 
         }, onError = {
             //TODO Show error notification to end user.
+            Timber.d(it)
 
         })
     }
@@ -72,12 +74,12 @@ class ReviewsFragment : BaseSingleContainerFragment() {
 
     // Generic method to handle subscribers
     private fun <ReturnType> subscribe(
-        observable: Single<ReturnType>,
+        observable: Observable<ReturnType>,
         onSuccess: (ReturnType) -> Unit,
         onError: (Throwable) -> Unit
     ) {
         compositeSubscription.add(observable
-            .compose(rxUtilProvider.getNetworkToUiSingleTransformer<ReturnType>())
+            .compose(rxUtilProvider.getNetworkToUiObservableTransformer<ReturnType>())
             .subscribe(onSuccess, onError))
     }
 

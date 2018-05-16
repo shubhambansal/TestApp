@@ -1,7 +1,7 @@
 package bansal.test.mobile.ui.reviews
 
 import bansal.test.mobile.data.repository.CustomerReviewsRepository
-import io.reactivex.Single
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class CustomerReviewsViewModel @Inject constructor(private val customerReviewsRepository: CustomerReviewsRepository){
@@ -26,7 +26,7 @@ class CustomerReviewsViewModel @Inject constructor(private val customerReviewsRe
 
     }
 
-    fun getCustomerReviewsFor(cityId : String, tourId : String) : Single<List<CustomerReviewsViewData>>{
-        return customerReviewsRepository.getReviewsFromApi(cityId, tourId, filterMap, queryMap)
+    fun getCustomerReviewsFor(cityId : String, tourId : String) : Observable<List<CustomerReviewsViewData>>{
+        return customerReviewsRepository.getTourReviews(cityId, tourId, filterMap, queryMap)
     }
 }

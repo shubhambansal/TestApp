@@ -12,7 +12,7 @@ data class ReviewsDataModel (
     val reviewId : Long,
 
     @ColumnInfo(name = ReviewColumns.RATING)
-    val rating : String,
+    val rating : Float,
 
     @ColumnInfo(name = ReviewColumns.TITLE)
     val title : String,
@@ -20,21 +20,21 @@ data class ReviewsDataModel (
     @ColumnInfo(name = ReviewColumns.MESSAGE)
     val message : String,
 
-    @ColumnInfo(name = ReviewColumns.AUTHOR)
-    val author : String,
+//    @ColumnInfo(name = ReviewColumns.AUTHOR)
+//    val author : String,
+//
+//    @ColumnInfo(name = ReviewColumns.IS_FOREIGN_LANGUAGE)
+//    val isForeignLanguage : Boolean,
+//
+//    @ColumnInfo(name = ReviewColumns.DATE)
+//    val date : String,
 
-    @ColumnInfo(name = ReviewColumns.IS_FOREIGN_LANGUAGE)
-    val isForeignLanguage : Boolean,
-
-    @ColumnInfo(name = ReviewColumns.DATE)
-    val date : String,
-
-    @ColumnInfo(name = ReviewColumns.LANGUAGE_CODE)
-    val languageCode : String,
-
-    @ColumnInfo(name = ReviewColumns.TRAVELLER_TYPE)
-    val travellerType : String?,
-
+//    @ColumnInfo(name = ReviewColumns.LANGUAGE_CODE)
+//    val languageCode : String,
+//
+//    @ColumnInfo(name = ReviewColumns.TRAVELLER_TYPE)
+//    val travellerType : String?,
+//
     @ColumnInfo(name = ReviewColumns.REVIEWER_NAME)
     val reviewerName : String,
 
