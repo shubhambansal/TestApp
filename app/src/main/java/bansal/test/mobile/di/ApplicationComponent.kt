@@ -3,6 +3,8 @@ package bansal.test.mobile.di
 import android.content.Context
 import bansal.test.mobile.ProtoApp
 import bansal.test.mobile.data.rest.di.RestModule
+import bansal.test.mobile.ui.postreview.PostReviewFragment
+import bansal.test.mobile.ui.reviews.ReviewsActivity
 import bansal.test.mobile.ui.reviews.ReviewsFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -16,7 +18,9 @@ interface ApplicationComponent : CoreComponent {
 
     fun inject(app: ProtoApp)
 
+    fun inject(activity: ReviewsActivity)
     fun inject(fragment: ReviewsFragment)
+    fun inject(fragment: PostReviewFragment)
 
     @Component.Builder
     interface Builder {
