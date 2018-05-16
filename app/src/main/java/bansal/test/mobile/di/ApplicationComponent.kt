@@ -3,7 +3,6 @@ package bansal.test.mobile.di
 import android.content.Context
 import bansal.test.mobile.ProtoApp
 import bansal.test.mobile.data.rest.di.RestModule
-import bansal.test.mobile.ui.onboarding.SplashFragment
 import bansal.test.mobile.ui.reviews.ReviewsFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -16,9 +15,6 @@ import javax.inject.Singleton
 interface ApplicationComponent : CoreComponent {
 
     fun inject(app: ProtoApp)
-
-    //TODO remove this
-    fun inject(fragment: SplashFragment)
 
     fun inject(fragment: ReviewsFragment)
 

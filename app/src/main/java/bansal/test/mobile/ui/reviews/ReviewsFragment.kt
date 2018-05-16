@@ -1,6 +1,7 @@
 package bansal.test.mobile.ui.reviews
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -22,18 +23,17 @@ class ReviewsFragment : BaseSingleContainerFragment() {
     private lateinit var recyclerView: RecyclerView
 
     @Inject
-    lateinit var customerReviewsViewModel : CustomerReviewsViewModel
+    lateinit var customerReviewsViewModel: CustomerReviewsViewModel
 
     @Inject
-    lateinit var rxUtilProvider : RxUtilProvider
+    lateinit var rxUtilProvider: RxUtilProvider
 
     private val compositeSubscription = CompositeDisposable()
-    private lateinit var adapter : CustomerReviewAdapter
+    private lateinit var adapter: CustomerReviewAdapter
 
     // These api params can be generic based on tour and city and later can be passed as a part of fragment args.
-    private val cityId : String = "berlin-l17"
-    private val tourId : String = "tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776"
-
+    private val cityId: String = "berlin-l17"
+    private val tourId: String = "tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776"
 
     override fun layoutId() = R.layout.review_fragment_layout
 
@@ -55,13 +55,14 @@ class ReviewsFragment : BaseSingleContainerFragment() {
         initRecyclerView()
 
 
-        subscribe(customerReviewsViewModel.getCustomerReviewsFor(cityId, tourId), onSuccess = {
-            reviewList -> adapter.items = reviewList
+        subscribe(customerReviewsViewModel.getCustomerReviewsFor(cityId, tourId), onSuccess = { reviewList ->
+            adapter.items = reviewList
 
-        }, onError = {
-            //TODO Show error notification to end user.
-            Timber.d(it)
-
+        }, onError = { error ->
+            Timber.e(error)
+            getView()?.let {
+                Snackbar.make(it, error.localizedMessage, Snackbar.LENGTH_LONG)
+            }
         })
     }
 
@@ -82,7 +83,6 @@ class ReviewsFragment : BaseSingleContainerFragment() {
             .compose(rxUtilProvider.getNetworkToUiObservableTransformer<ReturnType>())
             .subscribe(onSuccess, onError))
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
