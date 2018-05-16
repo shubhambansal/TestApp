@@ -11,6 +11,7 @@ import bansal.test.mobile.R
 import bansal.test.mobile.di.ApplicationComponent
 import bansal.test.mobile.ui.RxUtilProvider
 import bansal.test.mobile.ui.reviews.adapter.CustomerReviewAdapter
+import bansal.test.mobile.ui.reviews.adapter.EndlessRecyclerViewScrollListener
 import de.zalando.lounge.di.CoreComponentProvider
 import de.zalando.lounge.ui.base.BaseSingleContainerFragment
 import io.reactivex.Observable
@@ -54,6 +55,10 @@ class ReviewsFragment : BaseSingleContainerFragment() {
 
         initRecyclerView()
 
+        compositeSubscription.add(customerReviewsViewModel.loadReviewsCallback.subscribe {
+            reviewList ->
+            adapter.addItems(reviewList)
+        })
 
         subscribe(customerReviewsViewModel.getCustomerReviewsFor(cityId, tourId), onSuccess = { reviewList ->
             adapter.items = reviewList
@@ -69,8 +74,16 @@ class ReviewsFragment : BaseSingleContainerFragment() {
     private fun initRecyclerView() {
 
         adapter = CustomerReviewAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+
+        recyclerView.addOnScrollListener(object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(page: Int) {
+
+                customerReviewsViewModel.loadMoreReviews(cityId, tourId, page)
+            }
+        })
     }
 
     // Generic method to handle subscribers
